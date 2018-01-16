@@ -1,1 +1,37 @@
 C String review and printing to standard input
+
+
+Class Activity:
+	Predict the value of message after each line:
+		char str1[] = "hello";
+		char str2[] = "world";
+		char message[100];
+		
+		sprintf(message, "The meaning of life is %d",42);
+		//message = "The meaning of life is 42"
+		sprintf(message, "The meaning of life is %s.", str1);
+		//message = "The meaning of life is hello"
+		sprintf(message, "%S %s", str1, str2);
+		//message = "hello world"
+		sprintf(message, "%s %s", str1+1, str2+3);
+		//message = "ello ld"
+
+
+Lab Pro-Con list:
+	Step 1:
+		Identify at least 3-5 pros and 3-5 cons of printing messages to the LCD screen. 
+			Pros: readable, no internet or other connectivity necessary, cost effective
+			Cons: small print, limited time to read or parse scrolling text, must wait for scrolling banner if incomprehensible the first time.
+
+	Step 2:
+		Share your pros and cons with your neigbor. Identify the different users or groups of users you thought about when listing pros and cons.
+			user group: older people / or people who's primary language is not english -- thus the derived difficulty of having a limited time to read scrolling text
+
+	Step 3:
+		Together with your neighbor discuss at least 3-5 ideas you have to provide a new way of communicating to that user that could resolve the issue described.
+		These can involve modifications to the existing system or entirely new communication methods.
+			- ensure large print, and a larger board to ensure that the message being portrayed can be displayed as a whole word at a time to reduce reading difficulty 
+			- determine some statistically significant time frame based upon the average reading comprehension standard to determine how slowly the text needs to scroll 
+
+
+In class discussions regarding articles			
