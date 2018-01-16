@@ -1,0 +1,72 @@
+Note: still need to finish reviewing packet switching vs circuit switching
+
+Note: homework 1 due 1/23 at 11:59 p.m.
+
+___Internet structure: network of networks:___
+
+	internet is packet switching
+
+	hosts aka end systems connect to Internet via access ISPs:
+		- residential, company, and university ISPs
+
+	access ISPs in turn must be interconnected:
+		- so that any two hosts can send packets to each other
+
+	at center of the network there is a small # of well-connected large networks:
+		- "tier-1" commercial ISPs (level 3, sprint, at&t...) national and internation coverage
+		- content provider network (e.g., Google): private network that connects its data center to Internet, often bypassing tier-1 and regional ISP
+
+__Definition__
+	- IXP: internet exchange point
+
+___How do loss and delay occur?___
+
+	When packet arrival rate to link exceeds output link capacity, packets queue in router buffers, wait for turn
+
+	if no buffers are free for arriving packets, arriving packets are dropped (loss)
+
+	Four sources of packet delay:
+		- transmission
+		- propagation
+		- queue
+		- nodal processing
+
+	delay total = processing + queue + transmission + propagation
+
+	nodal processing:
+		- check bit errors
+		- determine output link
+		- typically a few microseconds
+
+	queueing delay:
+		- time waiting at output queue for transmimssion
+		- depends on congestion level of router
+	
+	transmission delay:
+		- L: packet length (bits)
+		- R: link bandwidth (bps)
+		- transmission delay = L/R
+		Note: time to push each bit onto a link
+	
+	prapagation delay:
+		- d: length of physical link
+		- s: propagation speed (~2x10^8 m/sec)
+		- prop. delay = d/s
+		Note: how long it takes a bit to go from one end of the physical link to the other end
+
+___"Real" Internet delays and routes___
+	what do "real internet delay & loss look like?
+
+	traceroute:
+		- provides delay measurement from source to router along end-end Internet path towards destination 
+		Note: for all router i:
+			- sends three packets that will reach router i on path towards destination
+			- router i will return packets to sender
+			- sender times interval between ransmission and reply
+
+___Throughput___
+	end-to-end throughput:
+		- rate (bits/second) at which bits are transferred between sender and receiver
+	
+	throughput = F/T
+		- F is file size, T is time taken to transfer file from server to client
