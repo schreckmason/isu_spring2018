@@ -1,0 +1,12 @@
+course website: web.cs.iastate.edu/~cs363
+	- username: coms363
+	- pswd: goto363
+
+Grade breakdown
+	- homework 10%
+	- in class quizzes 10%
+	- tests 50%
+	- projects 30%
+	Note: there are three exams, only the best two are graded
+
+

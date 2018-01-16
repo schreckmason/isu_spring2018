@@ -1,0 +1,93 @@
+Note: 7th edition of teh textbook necessary since homework will be assigned from it
+
+Internet comprised of five layers:
+	5. Application
+	4. Transport
+	3. Network
+	2. Data Link
+	1. Physical (not covered within this course)
+
+Grade breakdown
+	- 8 homework assignments (30%)
+	- two programming assignments (15%)
+	- midterm (25%)
+	- final exam (30%)
+	- final grades curved
+	NOTE: NO LATE WORK ACCEPTED
+
+Hosts:
+	- PC
+	- Server
+	- wireless laptop
+	- smartphon
+	- hosts = end systems running network apps
+
+Packet Switches:
+	- router
+	- link-layer switches
+	- packet switches: forward packets (chunks of data)
+
+Communicaiton links
+	- wireless links
+	- wired links
+	- fiber; copper; radio
+	- transmission rate: bandwidth
+
+Internet:
+	- internet is a  network of networks
+	- interconnected internet service providers
+	- hosts and packet switche srun protocols taht control the sending and receiving of information ( TCP, IP, HTTP, 802.11 )	
+	- an infrastructure that provides services to applications ( Web, VoIP, email, games, e-commerce... )
+	- provides programming interface to applications (sockets)
+	- protocol: defines the rules of communication between two entities ( which messages, what order, and responses allowed )
+
+__Definition__ 
+	a protocol defines hthe format and the order of messages exchanged between two or more communicating entities, as well as the actions taken or transmission and receipt of message or other event
+
+
+______ Chapter 1 ______
+
+	network edge:
+		- hosts: clients and servers
+		- servers often in data centers
+	access networks:
+		- networks that physically connect and end system to the first router, aka edge router
+	Q: How to connect end systems to edge router?
+		A1: residential access nets: DSL, cable network
+		A2: mobile wireless access networks: WiFi, 3G, 4G, LTE
+		A3: institutional networks (university, company): Ethernet
+
+___Wireless access networks ___
+	- shared wireless access network connects end system to router via "access point"
+	wireless LANs:
+		- within building (100 ft.)
+		- 802.11b/g/n (WiFi) 11,54,450 Mbps transmission rate
+
+	wide-area wireless acess:
+		- provided by telco (cellular) operator 10's km
+		- between 1 and 10 Mbps
+		- 3G, 4G, LTE
+
+___Enterprise access networks___
+	- typicall used in companies, universities, etc.
+	- 10 Mbps, 100 Mbps, 1Gbps, 10Gbps transmission rates
+	- end system typically connected into Ethernet switch
+
+___Physical media___
+	guided media:
+		- signals propagate in solid media: copper, fiber, coax (physical wire)
+
+	unguided media:
+		- signals propagate freely e.g., radio
+
+___Physical media: twisted pair, coax, fiber___
+	twisted pair (TP):
+		- two insulated copper wires
+
+	coaxial cable:
+		- broadband: multiple channels on cable
+
+	fiber optic cable:
+		high-speed operation: 10-100's Gbps transmission rate
+		
+		low error rate: immune to electromagnetic noise
