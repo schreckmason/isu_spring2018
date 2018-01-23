@@ -3,3 +3,6 @@ Note the first project has been assigned today:
 	All work will be uploaded within this same directory upon completion.
 
 Due - 02/05/2018
+
+
+Read chapter four of Gadia's book specifially focusing upon aggregate functions
