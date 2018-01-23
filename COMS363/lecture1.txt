@@ -1,0 +1,5 @@
+Note the first project has been assigned today:
+	This is simply to create a handful of tables and specify certain queries and data manipulations.
+	All work will be uploaded within this same directory upon completion.
+
+Due - 02/05/2018
