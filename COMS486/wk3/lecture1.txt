@@ -1,0 +1,97 @@
+___ HTTP request message ___
+	- two types of HTTPS messages:
+		- request, response
+	- HTTP request message:
+		- ASCII (human-readable format)
+		- e.g. (request header):
+			GET /index.html HTTP/1.1\r\n
+			Host: www-net.cs.umass.edu\r\n
+			User-Agent: Firefox/3.6.10\r\n
+			Accept: test/html, application/xhtml+xml\r\n
+			Accept-Language: en-us,en;q=0.5\r\n
+			Accept-Encoding: aqip,deflate\r\n
+			Accept-Charset: ISO-8859-1,utf-8;q=0.7\r\n
+			Keep-Alive: timeout=120\r\n
+			Connection: keep-alive\r\n
+			\r\n
+		Note: if you see "Keep-Alive" then it is a persistent connection
+
+___ Method types ___
+	- GET
+		- requests an object
+		
+	- POST
+		- uploads form input to server in entity body
+
+	- HEAD
+		- asks server to leave requested object out of response
+		- useful for debugging (make sure that a connection is made / object exists on server)
+
+	- PUT
+		- uploads file in entity body to path specified in URL field
+
+	- DELETE
+		- deletes file specified in the URL field
+
+___ HTTP response status codes ___
+	- some sample status codes : 
+
+		-200 OK:
+			- request succeeded, requested object included in response msg
+		-301 Moved Permanently:
+
+			- requested object moved, new location specified later in this msg (Location:)
+		-400 Bad Request:
+
+			- request msg not understood by server
+		-404 Not Found:
+
+			- requested document not found on this server
+
+		- 505 HTTP Version Not Supported:
+
+___ Trying out HTTP (client side) for yourself ___
+	1. Telnet to your favorite web server:
+		e.g. - "telnet gaia.cs.umass.edu 80"
+
+___ User-server state: cookies ___
+	- HTTP is stateless: server maintains no information about past client requests
+	- many websites use cookies to identify users
+		-four components:
+			1. cookie header line of HTTP response msg
+			2. cookier header line in next HTTP request msg
+			3. cookie file kept on user's host, managed by user's browser
+			4. back-end database at website
+___ Cookies (continued) ___
+	-cookies can be used to/for/in:
+		- authorization
+		- shopping carts
+		- recommendations
+		- user session state (web e-mail)
+		Note: cookies permit sites to learn a lot about you (e.g., name, email, etc..)
+
+
+___ Web caches (proxy server) ___
+	-goal: satisfy client request without involving origin server
+	
+	- user's browser can be configured to direct all HTTP reqeusts to web cache
+	- browser sends an HTTP request to cache
+		- object in chace: cache returns an object
+		- else cache requests object from morigin server, then returns object to client
+		Note: proxy server operates simultaneously as a client and a server
+
+___ More about Web caching ___
+	- typically cache is installed by access ISP (university, company, residential ISP)
+	- why web cahcing?
+		- reduce response time for client request
+		- reduce traffic on an institutions's access link
+		- reduce Internet traffic, improving performance for all applications
+
+
+___ Conditional GET ___
+	- copy of object in cache may be staly -> HTTP ahs a mechanism that allows a cache to verify that its object are up-to-date
+	- cache:
+		- specify date of cached copy in HTTP request
+		- e.g. "If-modified-since: <date>"
+	- server:
+		- response contains no object if cached copy is up-to-date
