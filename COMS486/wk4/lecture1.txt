@@ -1,0 +1,86 @@
+Date: 1/30/2018
+
+___ DNS Records ___
+	- DNS servers store resource records (RR)
+		- format (name, value, type, ttl)
+		- ttl: time to live which is the number of seconds for which the RR is valued
+
+	- type=A
+		- name is hostname value is IP address
+	
+	- type=CNAME
+		- name is alias name for some "canonical" name
+		- value is canonical name
+	- type=MX
+
+
+	- DIG EXAMPLE:
+		"dig pyrite.cs.iastate.edu" - from the localname server
+		"dig www.google.com"
+		"dig google.com NS" -- NS record is the name servers (use this for the homework)
+		"dig www.nyu.edu" -- see CNAME
+		"dig gmail.com MX" -- mx stands for mail exchange (will show the mail servers associated)
+		"dig iastate.edu MX"
+		"dig @a.root-servers.net www.iastate.edu" -- the @.[stuff] is from a specific server
+
+
+_____ END OF CHAPTER _____
+
+
+___ Transport Layer ___
+
+	__ Transport services and protocols __
+		- provide logical communication between app processes running on different hosts
+		- transport protocols run in end systems
+			- send side: breaks app messages into segments passes to network layer
+			- rcv side: reassembles segments into messages passes to app layer
+		- internet has more than one transport protocol
+			- TCP and UDP
+
+	__ Transport vs network layer __
+		- network layer: logical communication between hosts
+		- transport layer: logical communication between processes
+			- relies on, enhances, network layer services
+
+	__ Internet transport-layer protocols __
+		- TCP: reliable, in-order delivery
+			- congestion control
+			- flow control
+			- connection setup
+		- UDP: unreliable, unordered deliver
+			- no-frills inxtension of "best effort" IP
+		- services not available:
+			- delay guarantees
+			- bandwidth guarantees
+
+		Note: most important thing in chapter three is multiplexing and demultiplexing
+
+	__ Multiplexing/demultiplexing __
+		- multiplexing at sender:
+			- handle data from multiple app processes, add ransport header (later used for demultiplexing)
+		- demultipleing at receiver:
+			- use header info to deliver received segments to correct app processes
+		
+	__ How demultiplexing works __
+		- hosts receives TCP/UDP segment
+			- each segment has source, and destination port number
+			- srouce port number identifies the sending app process
+			- destination port number identifies the receiving app process
+		- TCP/UDP uses destination port number to direct segment to appropriate app process
+
+	__UDP: User Datagram Protocol __
+		- "no frills" internet transport protocol
+		- "best effort" service: UDP
+		- segments may be;
+			- lost
+			- delivered out-of-order to app
+		- connecitonless:
+			- no handshaking between UDP sender and receiver (thrown into the ether)
+		- UDP used by
+			- streaming multimedia apps (loss tolerant, delay sensitive, rate sensitive)
+			- DNS
+		- Why is there UDP?
+			- no connection establishment (which can add delay)
+			- simeple: no connection state at sender or receiver
+			- small header size
+			- no congestion control: UDP can blast away as fast as desired
