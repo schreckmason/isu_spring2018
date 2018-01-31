@@ -1,0 +1,48 @@
+Date: 1/30/2018
+
+___ Design Thinking ___
+	- "iterating in the technical domain"
+	- Understand -> Define -> Ideas -> Prototype -> Test
+
+___ Bitwise Operations ___
+	- C bitwise AND: &
+		- CH = CH & 0X3C
+		- x AND 1 = x (keep)
+		- x AND 0 = 0 (reset)
+
+	__ Class Exercise __
+		char ch;
+		short n;
+		
+		Clear the upper half of ch:
+			ch &= 0x0F
+		Clear every other bit of ch starting from 0
+			ch &= 0xAA
+		Clear the lower half of n
+			ch &= 0xFF00
+
+	- C bitwise OR: |
+	- C bitwise XOR: ^
+		- x ^ 1 = toggles x
+		- x ^ 0 = leaves x
+	- C bitwise inversion: ~
+	- C bitwise shift left: <<
+		- similar to multiplying by two
+	- C bitwise shift right: >>
+		- similar to dividing by two
+
+
+	- ~(1<<4)
+		0000 0001
+		0001 0000 -- <<4
+		1110 1111 -- finished	
+
+___ Memory Mapped I/O ___
+	- package pins
+	- pins with shared (multiplexed) functionality
+		- GPIO
+		- device I/O
+	- memeory mapped registers
+		- config registers
+		- data registers
+		- status registers
