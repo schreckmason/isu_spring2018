@@ -1,0 +1,46 @@
+Date: 1/06/2018
+
+___Performance of rdt3.0___
+	- rdt3.0 is correct, but performance is poor
+	- e.g.: 1 Gbps link, 30 ms RTT, 8000 bit packet = D(trans) = L/R = 8000/10^9 = 8 microseconds
+	- U(sender) utilization = fraction of time sender is busy sending
+		- = D(trans) / RTT+D(trans) = .008/30.008 = .00027
+	- 8Kb pkt every 30.008 msec : 276Kb/sec throughput over 1Gbps link
+	- network protocol limits use of physical resources
+
+___ Pipelined protocols ___
+	- pipelining: sender allows multiple, in-transit, yet-to-be-achknowledged packets
+		- range of sequence numbers must be increased
+		- buffering at sender and/or receiver
+		- e.g. 3-packet pipelining = U(sender) = (3L/R)/(RTT + L/R) = .024/30.008 = .008
+	- pipelining increases utilization
+
+___ Go-Back_N and Selective Repeat ___
+	- two types of pipelined protocols
+		1. go-Back-N
+		2. selective repeat
+
+	- Go-Back-N (GBN): receiver discards out-of-order packets (implemented in Project1)
+	- k-bit seq# in pkt header
+	- "window" of up to N, consecutive unack'ed pkts allowed
+	- ACK(n): acknowledges all pkts up to, including seq #n - cumulative ACK
+		- sender may receive duplicate ACKs (see receiver)
+	- timer for oldest "in-flight" pkt (normally the first packet that was sent)
+		- only timer maintained for the olders
+	- timeout(n) retransmit packet n and all higher seq # pkts in window
+
+
+___ Go-Back-N: receiver ___
+	- ACK-only: always send ACK for correctly-received pkt with highest in-order seq #
+	- when an out-of-rder pkt is received
+		- discard: no receiver buffering!
+		- re-ACK pkt with highest in-order seq # (duplicate ACK generated)
+	- receiver need only remember expectedseqnum
+	- Note: need to review slide 3-36 for the explanations in code
+	- Note: on that slide the event is "above the line" and the necessary action is implemented "below the line"
+
+___ GBN: receiver extended FSM ___
+	- slide 3-37
+	
+___ GBN summary ___
+	- sender can have up to N unacked packets in pipeline
