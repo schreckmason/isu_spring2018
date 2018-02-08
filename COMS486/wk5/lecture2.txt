@@ -1,0 +1,61 @@
+Date: 2/08/2018
+
+___ Announcements ___
+	- project 1 posted
+		- due on 2/28
+		- printout of sample output due on 3/1
+		- need to handle packet loss and packet corruption correctly
+
+	- midterm exam on 2/22
+		- covers everything up to the lecture on 2/20
+		- normal classroom
+		- note all topics covered on the midterm will be exempt from the final exam
+	- check TA feedback on homework in canvas
+
+
+___ GBN summary ___
+	- sender can have up to N unacknowledged packets in pipeline
+	- sender window contains N consecturive seq #'s
+		- limits seq #s of sent, unACKed packets
+	- receiver only accepts in-order packets
+	- receiver only sends cumulative ack
+		- ACK(n) acks all lpackets up to, including seq # n
+	- sender has timer for olderst unacked packet
+		- when timer expires, retransmit all unacked packets
+
+___ GBN in action ___
+	- note that if a packet is loss, discard subsequent packets
+	- when the timeout occurs for the packet that was lost, must go back and resend subsequent packets
+		-e.g. if pkt2 is lost, discard pkts 3,4,5 ... once pkt 2 times out, send pkt 2, 3, 4, 5
+
+___ Selective Repeat ___
+	- drawback of GBN: a single packet error can cause GBN to retransmit a large number of packets uneccessarily
+		- fixable by allowing the receiver to accept packets out of order (difference between GBN and selective repeat)
+
+	- selective-repeat protocols avoid unnecessary retransmissions
+		- receiver buffers out-of-order packets for eventual in-order delivery to upper layer
+		- receiver individually acknowledges all correctly received pkts
+		- sender only resends packets for which ACK not received; sender maintains a timer for each unACKed packet
+
+	- sender
+		- data from above:
+			- if next available seq # in window, send pkt
+		- timeout(n):
+			- resend pkt n, restart timer
+		- ACK(n) in [sendbase, sendbase+N-1];
+			- mark pkt n as received
+			- if n is smallest unACKed pkt, advance window base to next unACKed seq #
+
+	- receiver
+		- pkt n in [rcvbase, rcvbase+N-1]
+			- send ACK(n) //if in the "window"
+			- out-of-order: buffer
+			- in-order: deliver (also delivere buffered, in-order pkts), advance window to next not-yet-received pkt
+		- pkt n in [rcvbase-N, rcvbase-1]
+			- ACK(n)
+		- otherwise:
+			- ignore
+
+	- note that on slide 9 when ack2 arrives, the sender will send the next four pkts
+	- note if k-bit seq number is used, must have window size <= 2^(k-1) to avoid the dilemma
+
