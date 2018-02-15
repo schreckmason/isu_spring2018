@@ -1,0 +1,50 @@
+Date: 2/15/2018
+
+___ TCP reliable data transfer (rdt) ___
+	- TCP creates rdt service on top of IP's unreliable service
+		- pipelined segments
+		- cumulative acks
+		- single retransmission timer
+	- retransmissions triggered by:
+		- timeout events
+		- duplicate acks
+
+___ TCP sender events ___
+	1. data received form app:
+		- create segment with seq # and pass segment to IP
+			- seq # is byte-stream number of first data byte in segment
+		- start timer if not already running
+			- thing of timer as for oldest unacked segment
+			- expiration interval: TimeOutInterval
+	2. timeout:
+		- retransmit segment that cause timeout
+		- restart timer
+	3. ack received:
+		- if ack acknowledges previously unacked segmetns
+			- set SendBase = ack number
+			- start timer if there are still unacked sergments else stop timer
+	Notes: ACK=100 returned from receiver details the sender to start sending next segment at byte 100 (SendBase)
+
+___ TCP fast retransmit ___
+	- time-out period often relatively long:
+		- long delay before resending lost packet
+	- detect lost segments via duplicate ACKs
+		- sender often sends many segments back-to-back
+		- if a segment is lost there will likely be many duplicate ACKs
+
+	Note: if sender receives 3 dplucate ACKs for same data resent unacked segment with smallest seq # it is likely anacked segment was lost so don't wait for a timeout
+	Note: for this to work the receiver must get three out of order segments -- wait for 3 out of order ACKs to guard against out of order transmission
+
+___ TCP flow control ___
+	- flow control: receiver controls sender, so sender won't overflow receiver's buffer by transmitting too much
+	- reciever "advertises" free buffer space by including rwnd (receive window) value in TCP header of receiver-to-sender segments
+		- rwnd = RcvBuffer - (LastByteRcvd - LastByteRead);
+	- sender limits amount of unacked ('in-flight") data to reeiver's rwnd value
+		- LastByteSent - LastByteAcked <= rwnd
+	- guarantees receive buffer will not overflow
+
+
+__ Connection Management ___
+	1. before exchanging data, sender/reciever "handshake":
+		- agree to establish connection
+		- agree on connection parameters
