@@ -1,0 +1,90 @@
+Date: 2/20/2018
+
+___ TCP 3-way handshake ___
+	- SENDER:
+		- choose init seq num x send TCP SYN segment
+		- SYNbit =1, seq = x
+
+	- RECEIVER:
+		- choose init seq num y send TCP SYNACK segment, acking SYN
+		- SYNbit=1, Seq=y, ACKbit=1, ACKnum=x+1
+
+	- SENDER:
+		- send ACK for SYNACK
+		- this segment may contain client-to-server data ESTAB
+		- ACKbit=1, ACKnum=y+1, Seq=x+1 if segment contains data, else seq=x
+
+	- RECEIVER:
+		- established
+	
+	Note: slide 3-30
+	Note: x and y are randomly generated numbers
+
+___ TCP: closing a connection ___
+	- client, server each close their side of conection
+		- send TCP segment with FIN bit=1, start timer
+	- respond to received FIN with ACK
+		- on receiving FIN, ACK can be combined with own FIN
+
+	Note: at this point the connection from client to server has been closed to close both directions make sure FIN bit has been sent from either side, and whomever received the FIN must ACK
+	Note: need a timer for btoh server and client
+	Note: FINbit seq number will be the immediate bit following the data byte of the segment
+
+___ Principles of congestion control ___
+	- DEFINITION: 
+		-informal: "too many sources sending too much data too fast for network to handle"
+	
+	Note: flow control is 'end to end' where the send window should not exceed the receive window size
+	
+	- manifestations:
+		- lost packets (buffer overflow at routers)
+		- long delays (queueing in router buffers)
+
+___ causes/costs of congestion: scenario 1 ___
+	- two senders, two receivers
+	- one router, infinite buffers
+	- output link capacity: R
+	- no error recovery (e.g. no retransmission)
+	- maximum per-connection throughput = R/2
+	- as lamnda(in) approaches R/2 delay grows exponentially
+
+___ causts/costs of congestion: scenario 2 ___
+	- one router, finite buffers
+	- sender retransmits timed-out packet
+	- rate at which transport layer sends into network is lambda'(in), lambda'(in)>= lambda(in)
+		- lambda'(in) referred to as the offered load to the network
+
+	Note: lambda(in) = original data; 
+	Note: lambda'(in) = original data + retransmitted data
+
+	unrealistic casee:
+		- sender sends only when a free buffer is available at router
+		- no loss ( lambda'(in) == lambda(in) )
+
+	more realistic:
+		- packets can be lost, dropped at router due to full buffers
+		- sender only resends if packet is 'known for certain' to be lost
+		- incur large cost since to solve this there would have to be a large timeout window --> slow reaction (retransmission)
+
+	realistic case:
+		- packets can be lost, dropped at router due to full buffers
+		- sender may time out prematurely, sending two copies both of which are delivered
+
+	"costs" of congestion:
+		- retransmissions needed to compensate for dropped packets
+		- unneeded retransmissions:router forwards unneeded copies of a packet
+
+___ cases/costs of congestion: scenario 3 ___
+	- four senders
+	- multihop paths
+	- timeouts/retransmissions
+	- all hosts have same lambda(in) value
+
+
+
+
+
+
+
+
+
