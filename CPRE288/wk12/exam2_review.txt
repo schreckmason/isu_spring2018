@@ -1,0 +1,39 @@
+- Same structure as exam 1, 1 pages of notes, calculator, and open textbook
+- 60 minutes
+
+___ Topics ___
+	- Programming Tiva I/O modules and functions
+		- USART
+		- ADC
+		- Timer
+			- periodic/continuous and one-shot modes
+			- input capture mode
+			- PWM (output compare) mode
+		- GPIO configuration
+		- For each: working principles and related concepts, programming interface, writing C functions for common tasks, typical application scenarios
+
+
+___ Suggested Preparation activities ___
+	- Lab manuals and work
+	- Lecture slides and examples (lab intro)
+		- practice using the datasheet and/or textbook
+	- Datasheet tables provided with exam packet
+		- GPIO pins and alternate functions (GPIOPCTL PMCx fields)
+		- IRQ numbers and ISR Names
+		- NVIC Priority Registers and Bits
+		- NVIC Enable Registers and Bits
+	- Homework problems
+
+___ Common question styes ___
+	- short-answer
+		- conceptual
+		- analysis
+		- calculation
+	- Programming
+		- given application scenario
+		- initialize an I/O module
+		- access I/O data
+		- interrupt programming
+	- fill in the blank
+
+
