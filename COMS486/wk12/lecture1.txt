@@ -1,0 +1,85 @@
+___ Making routing scalable ___
+	- our routing study thus far - idealized
+		- all router identical
+		- network "flat"
+		NOTE: NOT TRUE IN PRACTICE
+
+	- scale: with billions of destinations and hundreds of millions of routers:
+		- overhead communicating, computing, and storing routing info becomes prohibitive
+
+___ Internet approach to scalable routing ___
+	- aggregate routers into regions known as "autonomous systems (ASes)" a.k.a "domains"
+
+	__ intra-AS routing __
+		- routing among routers in same AS
+		- all routers in an AS must run same intra-domain routing protocol
+		- different ASes can run different intra-domain routing protocols
+	__ inter-AS routing __
+		- routing among ASes
+		- gateway router: at "edge" of an AS has link(s) to router(s) in other ASes
+		- gateway routers perform inter-domain routing (as well as intra-domain routing)
+
+___ Interconnected ASes ___
+	- forwarding table configured by both intra and inter-AS routing algorithms
+		- intra-AS routing determine entries for destinations within AS
+		- inter-AS & inter-AS determine entries for external destinations
+
+___ Intra-AS Routing Protocols ___
+	- also known as interior gateway protocols (IGP)
+	- most common intra-AS routing protocols
+		- RIP: routing information protocol
+		- OSPF: open shourtest path first
+		-
+
+___ OSPF (Open Shortest Path First) ___
+	- "open" : publicly available (RFC2328)
+	- uses link-state algorithm
+		- link-state packet dissemination (link state packet just knows about links connected to a node and each respective link traversal cost)
+		- topology map at each node
+		- route computation using Dijkstra's algorithm
+	- router floods OSPF link-state packets to all other routers in ENTIRE AS
+		- link-state packet contains cost and status (up/down) for each attached link
+		- carried in OSPF messages directly over IP
+	- when does a router broadcast its link-state packet?
+		- when there is a change in link's state
+		- periodically (every 30 mins)
+
+	__ "Advanced" features __
+		- security: OSPF message can be authenticated 
+		NOTE: don't want a 'bad' router to lie about information and thus generate an incorrect link-state packet
+		- multiple same-cost paths allowed (this allows for a load to be split upon multiple same cost links to the same interface)
+		- integrated uni and multi-cast support:
+			- multicast OSPF (MOSPF) uses same topology database as OSPF
+			- e.g. multi-cast allows for a message to be sent to multiple destinations from one source (like a video broadcast)
+		- hierarchical OSPF in large ASes
+			- splits AS into backbone and non-backbone areas, OSPF only ran in each non backbone area independent of one another to avoid scalability issue
+
+___ Inter-AS routing ___
+	- suppose router in AS1 receives datagram destined outside of AS1:
+		-router should forward packet to gateway router, but which one?
+	- AS1 MUST:
+		1. learn which destinations are reachable
+		2. forward this reachable information to all gateway routers in AS1
+
+___ Internet inter-AS routing: BGP ___
+	- BGP (border gateway protocol): the de facto inter-domain routing protocol
+	- BGP provides each AS a means to:
+		- obtain subnet reachability information from nighboring ASes using eBGP(external BGP)
+		- propagate reachability information to all AS internal routers using iBGP (internal BGP)
+		- determine "good" routes to other networks based on reachability information and policy
+		NOTE: gateway routers run both eBGP and iBGP whereas internal routers run only iBGP protocols
+
+___ BGP basics ___
+	- BGP sessions: two BGP routers ("peers") exchange BGP messages over TCP connection
+		-advertising paths to different destination network prefixes (BGP is a "path vector" protocol
+
+___ Path attributes and BGP routes ___
+	- advertised prefix includes BGP attributes
+		- prefix + attributes = "route"
+	- two important attributes:
+		- AS-PATH: list of ASes through which prefix advertisement has passed
+		- NEXT-HOP: indicates IP address of the router interface that begins the AS path
+	- Policy-based routing:
+		- gateway router receiving route advertisement uses import policy to accept/decline path
+		- AS policy also determines whether to advertise to advertise path to other neighboring ASes
+
