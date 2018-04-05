@@ -1,0 +1,7 @@
+___ BGP Route Selection ___
+	- router may learn about more than one route to destination AS, selects route based on:
+		1. local preference value attribute: policy decision
+		2. shortest AS-PATH
+		3. closest NEXT-HOP router: "hot potato routing" (5-21)
+
+
